@@ -1,6 +1,6 @@
 class State:
     states: list = ["MAIN_MENU", "APP"]
-    state: str
+    state: str = "MAIN_MENU"
 
     @classmethod
     def change_state(cls, state: str) -> None:

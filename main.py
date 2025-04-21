@@ -2,38 +2,56 @@ import sys
 
 import pygame
 
+from utils.states import State
+
 
 class Game:
-    def __init__(self):
+    def __init__(self) -> None:
         pygame.init()
+
         self.WIDTH, self.HEIGHT = 1280, 720
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
-        pygame.display.set_caption("Hydro Mazury")
-        self.clock = pygame.time.Clock()
-        self.running = True
 
-    def run(self):
+        pygame.display.set_caption("Hydro Mazury")
+
+        self.clock = pygame.time.Clock()
+        self.running: bool = True
+
+        self.state = State()
+
+    def run(self) -> None:
         while self.running:
             self.handle_events()
+
             self.update()
-            self.draw()
+            self.render()
+
             self.clock.tick(60)
 
         self.quit()
 
-    def handle_events(self):
+    def handle_events(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
 
-    def update(self):
-        pass
+    def update(self) -> None:
+        match self.state.state:
+            case "MAIN_MENU":
+                pass
+            case "APP":
+                pass
 
-    def draw(self):
-        self.screen.fill((30, 30, 30))
+    def render(self) -> None:
+        match self.state.state:
+            case "MAIN_MENU":
+                self.screen.fill((30, 30, 30))
+            case "APP":
+                self.screen.fill((70, 70, 70))
+
         pygame.display.flip()
 
-    def quit(self):
+    def quit(self) -> None:
         pygame.quit()
         sys.exit()
 
