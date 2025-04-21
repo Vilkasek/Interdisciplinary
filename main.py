@@ -20,7 +20,7 @@ class Game:
         self.state = State()
 
     def run(self) -> None:
-        while self.running:
+        while self.state.running:
             self.handle_events()
 
             self.update()
@@ -33,7 +33,7 @@ class Game:
     def handle_events(self) -> None:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                self.running = False
+                self.state.toggle_run_state(False)
 
     def update(self) -> None:
         match self.state.state:
