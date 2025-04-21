@@ -43,11 +43,13 @@ class Game:
                 pass
 
     def render(self) -> None:
+        self.screen.fill((190, 190, 190))
+
         match self.state.state:
             case "MAIN_MENU":
-                self.screen.fill((30, 30, 30))
+                pass
             case "APP":
-                self.screen.fill((70, 70, 70))
+                pass
 
         pygame.display.flip()
 
