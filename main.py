@@ -2,6 +2,7 @@ import sys
 
 import pygame
 
+from utils.palette import *
 from utils.states import State
 
 
@@ -43,7 +44,7 @@ class Game:
                 pass
 
     def render(self) -> None:
-        self.screen.fill((190, 190, 190))
+        self.screen.fill(background_color)
 
         match self.state.state:
             case "MAIN_MENU":
