@@ -6,7 +6,7 @@ from utils.palette import *
 class MainMenu:
     def __init__(self) -> None:
         self.title_font = pygame.font.Font("assets/fonts/Helvetica.ttf", 64)
-        # self.normal_font = pygame.font.Font("../assets/fonts/Helvetica.ttf", 32)
+        self.normal_font = pygame.font.Font("assets/fonts/Helvetica.ttf", 32)
 
         self.title_surface = self.title_font.render(
             "Hydro mazury", True, dark_text_color, None
