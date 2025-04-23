@@ -12,3 +12,6 @@ class MainMenu:
             "Hydro mazury", True, dark_text_color, None
         )
         self.title_rectangle = self.title_surface.get_rect(center=(640, 100))
+
+        self.logo_surface = pygame.image.load("../assets/graphics/logo.png")
+        self.logo_rectangle = self.logo_surface.get_rect()
