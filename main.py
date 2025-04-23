@@ -2,6 +2,7 @@ import sys
 
 import pygame
 
+from states.main_menu import MainMenu
 from utils.palette import *
 from utils.states import State
 
@@ -19,6 +20,8 @@ class Game:
         self.running: bool = True
 
         self.state = State()
+
+        self.main_menu = MainMenu()
 
     def run(self) -> None:
         while self.state.running:
@@ -48,7 +51,7 @@ class Game:
 
         match self.state.state:
             case "MAIN_MENU":
-                pass
+                self.main_menu.render(self.screen)
             case "APP":
                 pass
 
