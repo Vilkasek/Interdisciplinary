@@ -12,5 +12,8 @@ class MainMenu:
         self.title_rectangle = self.title_surface.get_rect(topleft=(300, 20))
 
     def render(self, w: pygame.Surface):
+        self.logo_surface = self.logo_surface.convert_alpha()
+        self.title_surface = self.title_surface.convert_alpha()
+
         w.blit(self.logo_surface, self.logo_rectangle)
         w.blit(self.title_surface, self.title_rectangle)
