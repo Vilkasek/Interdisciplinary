@@ -11,7 +11,7 @@ class Game:
     def __init__(self) -> None:
         pygame.init()
 
-        self.WIDTH, self.HEIGHT = 1280, 720
+        self.WIDTH, self.HEIGHT = 1600, 900
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 
         pygame.display.set_caption("Hydro Mazury")
