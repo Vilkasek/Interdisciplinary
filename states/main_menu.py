@@ -1,5 +1,6 @@
 import pygame
 
+from utils.button import Button
 from utils.palette import *
 
 
@@ -10,6 +11,8 @@ class MainMenu:
 
         self.title_surface = pygame.image.load("assets/graphics/title.png")
         self.title_rectangle = self.title_surface.get_rect(topleft=(300, 20))
+
+        self.polution_button = Button("assets/graphics/water_level.png", (20, 100))
 
     def render(self, w: pygame.Surface):
         self.logo_surface = self.logo_surface.convert_alpha()
