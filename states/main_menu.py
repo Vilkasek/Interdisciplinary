@@ -14,7 +14,8 @@ class MainMenu:
         self.title_surface = pygame.image.load("assets/graphics/title.png")
         self.title_rectangle = self.title_surface.get_rect(topleft=(300, 20))
 
-        self.water_button = Button("assets/graphics/water_level.png", (20, 220))
+        self.buttons = [Button("assets/graphics/water_level.png", (20, 220))]
+
         self.water_text_surface = self.font.render(
             "Poziom wód", True, blue_text_color, None
         )
@@ -29,4 +30,5 @@ class MainMenu:
 
         w.blit(self.water_text_surface, self.water_text_rectangle)
 
-        self.water_button.render(w)
+        for button in self.buttons:
+            button.render(w)
