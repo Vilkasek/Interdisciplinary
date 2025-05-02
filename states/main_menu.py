@@ -15,7 +15,11 @@ class MainMenu:
         self.title_surface = pygame.image.load("assets/graphics/title.png")
         self.title_rectangle = self.title_surface.get_rect(topleft=(300, 20))
 
-        self.buttons = [Button("assets/graphics/water_level.png", (20, 220))]
+        self.buttons = [
+            Button("assets/graphics/water_level.png", (20, 220)),
+            Button("assets/graphics/polution_level.png", (20, 418)),
+            Button("assets/graphics/temperature_level.png", (20, 619)),
+        ]
 
         self.water_text_surface = self.font.render(
             "Poziom wód", True, blue_text_color, None
@@ -26,7 +30,7 @@ class MainMenu:
 
     def handle_events(self, ev: pygame.event.Event):
         if self.buttons[0].is_clicked(ev):
-            self.state.change_state("APP")
+            self.state.change_state("WATER")
 
     def render(self, w: pygame.Surface):
         self.logo_surface = self.logo_surface.convert_alpha()

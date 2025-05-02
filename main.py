@@ -43,14 +43,22 @@ class Game:
             match self.state.state:
                 case "MAIN_MENU":
                     self.main_menu.handle_events(event)
-                case "APP":
+                case "WATER":
+                    pass
+                case "POLUTION":
+                    pass
+                case "TEMPERATURE":
                     pass
 
     def update(self) -> None:
         match self.state.state:
             case "MAIN_MENU":
                 pass
-            case "APP":
+            case "WATER":
+                pass
+            case "POLUTION":
+                pass
+            case "TEMPERATURE":
                 pass
 
     def render(self) -> None:
@@ -59,7 +67,11 @@ class Game:
         match self.state.state:
             case "MAIN_MENU":
                 self.main_menu.render(self.screen)
-            case "APP":
+            case "WATER":
+                pass
+            case "POLUTION":
+                pass
+            case "TEMPERATURE":
                 pass
 
         pygame.display.flip()
