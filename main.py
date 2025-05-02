@@ -2,6 +2,7 @@ import sys
 
 import pygame
 
+from states import main_menu
 from states.main_menu import MainMenu
 from utils.palette import *
 from utils.states import State
@@ -38,6 +39,12 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.state.toggle_run_state(False)
+
+            match self.state.state:
+                case "MAIN_MENU":
+                    self.main_menu.handle_events(event)
+                case "APP":
+                    pass
 
     def update(self) -> None:
         match self.state.state:

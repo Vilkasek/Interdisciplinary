@@ -6,8 +6,11 @@ class Button:
         self.surface = pygame.image.load(path)
         self.rect = self.surface.get_rect(topleft=position)
 
-    def handle_event(self, event: pygame.event.Event):
-        pass
+    def is_clicked(self, ev: pygame.event.Event):
+        return (
+            self.rect.collidepoint(pygame.mouse.get_pos())
+            and ev.type == pygame.MOUSEBUTTONUP
+        )
 
     def render(self, w: pygame.Surface):
         w.blit(self.surface, self.rect)

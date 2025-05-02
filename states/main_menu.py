@@ -2,6 +2,7 @@ import pygame
 
 from utils.button import Button
 from utils.palette import *
+from utils.states import State
 
 
 class MainMenu:
@@ -20,6 +21,12 @@ class MainMenu:
             "Poziom wód", True, blue_text_color, None
         )
         self.water_text_rectangle = self.water_text_surface.get_rect(topleft=(220, 300))
+
+        self.state = State()
+
+    def handle_events(self, ev: pygame.event.Event):
+        if self.buttons[0].is_clicked(ev):
+            self.state.change_state("APP")
 
     def render(self, w: pygame.Surface):
         self.logo_surface = self.logo_surface.convert_alpha()
