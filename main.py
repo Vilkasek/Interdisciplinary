@@ -1,7 +1,10 @@
 import os
 import sys
 
+import matplotlib
 import pygame
+
+matplotlib.use("Agg")  # Non-interactive backend for matplotlib
 
 from data_loader import DataLoader
 from pdf_generator import PDFReportGenerator
@@ -24,14 +27,27 @@ class Game:
 
         self.state = State()
 
-        self.main_menu = MainMenu()
+        os.makedirs("assets/data", exist_ok=True)
+        os.makedirs("reports", exist_ok=True)
 
-        # Load data
-        try:
-            self.data = DataLoader.load_json_data("assets/data/hydro_data.json")
-        except Exception as e:
-            print(f"Error loading data: {e}")
-            self.data = []
+        if not os.path.exists("assets/data/hydro_data.json"):
+            try:
+                self.data = DataLoader.combine_lake_river_data(
+                    "lakes.json", "rivers.json", "assets/data/hydro_data.json"
+                )
+                print("Combined data generated from lakes.json and rivers.json")
+            except Exception as e:
+                print(f"Error combining data: {e}")
+                self.data = []
+        else:
+            try:
+                self.data = DataLoader.load_json_data("assets/data/hydro_data.json")
+                print(f"Loaded {len(self.data)} years of data")
+            except Exception as e:
+                print(f"Error loading data: {e}")
+                self.data = []
+
+        self.main_menu = MainMenu()
 
     def run(self) -> None:
         while self.state.running:
@@ -59,10 +75,8 @@ class Game:
                 case "TEMPERATURE":
                     pass
                 case "GENERATE_REPORT":
-                    # Generate PDF report when this state is triggered
-                    if event.type == pygame.MOUSEBUTTONUP:
-                        self.generate_report()
-                        self.state.change_state("MAIN_MENU")
+                    self.generate_report()
+                    self.state.change_state("MAIN_MENU")
 
     def generate_report(self):
         """
@@ -73,14 +87,25 @@ class Game:
             return
 
         try:
-            # Ensure reports directory exists
-            os.makedirs("reports", exist_ok=True)
+            timestamp = pygame.time.get_ticks()
+            report_path = f"reports/hydro_report_{timestamp}.pdf"
 
-            # Generate report
-            report_path = PDFReportGenerator.generate_report(
-                self.data, f"reports/hydro_report_{pygame.time.get_ticks()}.pdf"
-            )
-            print(f"Report generated: {report_path}")
+            full_path = PDFReportGenerator.generate_report(self.data, report_path)
+            print(f"Report generated: {full_path}")
+
+            try:
+                import platform
+                import subprocess
+
+                if platform.system() == "Darwin":
+                    subprocess.call(("open", full_path))
+                # elif platform.system() == "Windows":
+                #     os.startfile(full_path)
+                else:
+                    subprocess.call(("xdg-open", full_path))
+            except Exception as e:
+                print(f"Could not open PDF automatically: {e}")
+
         except Exception as e:
             print(f"Error generating report: {e}")
 
