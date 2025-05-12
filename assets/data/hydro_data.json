@@ -1,22 +1,74 @@
 [
   {
-    "year": 2020,
-    "temperature": 14.5,
-    "water_level": 2.3
-  },
-  {
     "year": 2021,
-    "temperature": 15.2,
-    "water_level": 2.5
+    "water_bodies": {
+      "lakes": [
+        { "name": "J. Wigry", "water_level": 104.5 },
+        { "name": "J. Mamry", "water_level": 140.4 },
+        { "name": "J. Orzysz", "water_level": 95.7 },
+        { "name": "J. Nidzkie", "water_level": 58.6 },
+        { "name": "J. Dejguny", "water_level": 189.5 },
+        { "name": "J. Roś", "water_level": 85.6 },
+        { "name": "J. Mikołajskie", "water_level": 65.6 },
+        { "name": "J. Śniardwy", "water_level": 248.3 }
+      ],
+      "rivers": [
+        { "name": "Drwęca", "water_level": 78.3 },
+        { "name": "Pisa", "water_level": 119.7 },
+        { "name": "Krutynia", "water_level": 96.1 },
+        { "name": "Orzysza", "water_level": 113.9 },
+        { "name": "Węgorapa", "water_level": 196.6 }
+      ]
+    },
+    "average_water_level": 120.99,
+    "temperature": 15.2
   },
   {
     "year": 2022,
-    "temperature": 16.1,
-    "water_level": 2.7
+    "water_bodies": {
+      "lakes": [
+        { "name": "J. Wigry", "water_level": 114.9 },
+        { "name": "J. Mamry", "water_level": 143.2 },
+        { "name": "J. Orzysz", "water_level": 94.6 },
+        { "name": "J. Nidzkie", "water_level": 58.0 },
+        { "name": "J. Dejguny", "water_level": 186.4 },
+        { "name": "J. Roś", "water_level": 89.0 },
+        { "name": "J. Mikołajskie", "water_level": 62.8 },
+        { "name": "J. Śniardwy", "water_level": null }
+      ],
+      "rivers": [
+        { "name": "Drwęca", "water_level": 81.5 },
+        { "name": "Pisa", "water_level": 113.1 },
+        { "name": "Krutynia", "water_level": 86.3 },
+        { "name": "Orzysza", "water_level": 119.0 },
+        { "name": "Węgorapa", "water_level": 224.8 }
+      ]
+    },
+    "average_water_level": 114.47,
+    "temperature": 16.1
   },
   {
     "year": 2023,
-    "temperature": 16.8,
-    "water_level": 2.9
+    "water_bodies": {
+      "lakes": [
+        { "name": "J. Wigry", "water_level": 117.6 },
+        { "name": "J. Mamry", "water_level": 126.8 },
+        { "name": "J. Orzysz", "water_level": 90.3 },
+        { "name": "J. Nidzkie", "water_level": 54.8 },
+        { "name": "J. Dejguny", "water_level": 175.4 },
+        { "name": "J. Roś", "water_level": 60.6 },
+        { "name": "J. Mikołajskie", "water_level": 60.0 },
+        { "name": "J. Śniardwy", "water_level": null }
+      ],
+      "rivers": [
+        { "name": "Drwęca", "water_level": 78.6 },
+        { "name": "Pisa", "water_level": 113.0 },
+        { "name": "Krutynia", "water_level": 70.3 },
+        { "name": "Orzysza", "water_level": 96.9 },
+        { "name": "Węgorapa", "water_level": 171.0 }
+      ]
+    },
+    "average_water_level": 101.28,
+    "temperature": 16.8
   }
 ]
