@@ -1,0 +1,22 @@
+[
+  {
+    "year": 2020,
+    "temperature": 14.5,
+    "water_level": 2.3
+  },
+  {
+    "year": 2021,
+    "temperature": 15.2,
+    "water_level": 2.5
+  },
+  {
+    "year": 2022,
+    "temperature": 16.1,
+    "water_level": 2.7
+  },
+  {
+    "year": 2023,
+    "temperature": 16.8,
+    "water_level": 2.9
+  }
+]

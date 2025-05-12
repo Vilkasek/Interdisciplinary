@@ -19,6 +19,7 @@ class MainMenu:
             Button("assets/graphics/water_level.png", (20, 220)),
             Button("assets/graphics/polution_level.png", (20, 418)),
             Button("assets/graphics/temperature_level.png", (20, 619)),
+            Button("assets/graphics/generate_report.png", (20, 750)),
         ]
 
         self.water_text_surface = self.font.render(
@@ -26,11 +27,20 @@ class MainMenu:
         )
         self.water_text_rectangle = self.water_text_surface.get_rect(topleft=(220, 300))
 
+        self.report_text_surface = self.font.render(
+            "Generuj raport", True, blue_text_color, None
+        )
+        self.report_text_rectangle = self.report_text_surface.get_rect(
+            topleft=(220, 750)
+        )
+
         self.state = State()
 
     def handle_events(self, ev: pygame.event.Event):
         if self.buttons[0].is_clicked(ev):
             self.state.change_state("WATER")
+        elif self.buttons[3].is_clicked(ev):
+            self.state.change_state("GENERATE_REPORT")
 
     def render(self, w: pygame.Surface):
         self.logo_surface = self.logo_surface.convert_alpha()
@@ -40,6 +50,7 @@ class MainMenu:
         w.blit(self.title_surface, self.title_rectangle)
 
         w.blit(self.water_text_surface, self.water_text_rectangle)
+        w.blit(self.report_text_surface, self.report_text_rectangle)
 
         for button in self.buttons:
             button.render(w)
