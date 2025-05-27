@@ -4,7 +4,7 @@ import sys
 import matplotlib
 import pygame
 
-matplotlib.use("Agg")  # Non-interactive backend for matplotlib
+matplotlib.use("Agg")
 
 from data_loader import DataLoader
 from pdf_generator import PDFReportGenerator
@@ -75,17 +75,16 @@ class Game:
                 case "TEMPERATURE":
                     pass
                 case "GENERATE_REPORT":
-                    self.generate_report()
+                    self.generate_whole_report()
                     self.state.change_state("MAIN_MENU")
 
-    def generate_report(self):
+    def generate_whole_report(self):
         """
         Generate a PDF report from the loaded data
         """
         if not self.data:
             print("No data available to generate report")
             return
-
         try:
             timestamp = pygame.time.get_ticks()
             report_path = f"reports/hydro_report_{timestamp}.pdf"
@@ -99,8 +98,8 @@ class Game:
 
                 if platform.system() == "Darwin":
                     subprocess.call(("open", full_path))
-                # elif platform.system() == "Windows":
-                #     os.startfile(full_path)
+                elif platform.system() == "Windows":
+                    os.startfile(full_path)
                 else:
                     subprocess.call(("xdg-open", full_path))
             except Exception as e:
