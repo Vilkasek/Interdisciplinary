@@ -9,11 +9,14 @@ matplotlib.use("Agg")
 from data_loader import DataLoader
 from pdf_generator import PDFReportGenerator
 from states.main_menu import MainMenu
+from states.polution_level import Polution
+from states.temperature_level import Temperature
+from states.water_level import Water
 from utils.palette import *
 from utils.states import State
 
 
-class Game:
+class App:
     def __init__(self) -> None:
         pygame.init()
 
@@ -48,6 +51,9 @@ class Game:
                 self.data = []
 
         self.main_menu = MainMenu()
+        self.water_menu = Water()
+        self.polution_menu = Polution()
+        self.temperature_menu = Temperature()
 
     def run(self) -> None:
         while self.state.running:
@@ -69,19 +75,13 @@ class Game:
                 case "MAIN_MENU":
                     self.main_menu.handle_events(event)
                 case "WATER":
-                    pass
+                    self.water_menu.handle_events(event)
                 case "POLUTION":
-                    pass
+                    self.polution_menu.handle_events(event)
                 case "TEMPERATURE":
-                    pass
-                case "GENERATE_REPORT":
-                    self.generate_whole_report()
-                    self.state.change_state("MAIN_MENU")
+                    self.temperature_menu.handle_events(event)
 
     def generate_whole_report(self):
-        """
-        Generate a PDF report from the loaded data
-        """
         if not self.data:
             print("No data available to generate report")
             return
@@ -126,11 +126,11 @@ class Game:
             case "MAIN_MENU":
                 self.main_menu.render(self.screen)
             case "WATER":
-                pass
+                self.water_menu.render(self.screen)
             case "POLUTION":
-                pass
+                self.polution_menu.render(self.screen)
             case "TEMPERATURE":
-                pass
+                self.temperature_menu.render(self.screen)
 
         pygame.display.flip()
 
@@ -140,5 +140,5 @@ class Game:
 
 
 if __name__ == "__main__":
-    game = Game()
-    game.run()
+    app = App()
+    app.run()

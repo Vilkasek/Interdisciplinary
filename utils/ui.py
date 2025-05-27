@@ -37,7 +37,6 @@ class UI:
             self.state.change_state("TEMPERATURE")
 
     def render(self, w: pygame.Surface):
-        self.logo_surface = self.logo_surface.convert_alpha()
         self.title_surface = self.title_surface.convert_alpha()
 
         w.blit(self.title_surface, self.title_rectangle)
