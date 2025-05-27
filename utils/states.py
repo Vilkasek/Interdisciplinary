@@ -1,5 +1,5 @@
 class State:
-    states: list = ["MAIN_MENU", "WATER", "POLUTION", "TEMPERATURE", "GENERATE_REPORT"]
+    states: list = ["MAIN_MENU", "WATER", "POLUTION", "TEMPERATURE"]
     state: str = "MAIN_MENU"
 
     running: bool = True
