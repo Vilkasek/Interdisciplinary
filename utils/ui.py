@@ -31,9 +31,9 @@ class UI:
             self.state.change_state("MAIN_MENU")
         elif self.buttons[1].is_clicked(ev):
             self.state.change_state("WATER")
-        elif self.buttons[1].is_clicked(ev):
+        elif self.buttons[2].is_clicked(ev):
             self.state.change_state("POLUTION")
-        elif self.buttons[1].is_clicked(ev):
+        elif self.buttons[3].is_clicked(ev):
             self.state.change_state("TEMPERATURE")
 
     def render(self, w: pygame.Surface):

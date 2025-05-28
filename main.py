@@ -6,8 +6,6 @@ import pygame
 
 matplotlib.use("Agg")
 
-from data_loader import DataLoader
-from pdf_generator import PDFReportGenerator
 from states.main_menu import MainMenu
 from states.polution_level import Polution
 from states.temperature_level import Temperature
@@ -32,23 +30,6 @@ class App:
 
         os.makedirs("assets/data", exist_ok=True)
         os.makedirs("reports", exist_ok=True)
-
-        if not os.path.exists("assets/data/hydro_data.json"):
-            try:
-                self.data = DataLoader.combine_lake_river_data(
-                    "lakes.json", "rivers.json", "assets/data/hydro_data.json"
-                )
-                print("Combined data generated from lakes.json and rivers.json")
-            except Exception as e:
-                print(f"Error combining data: {e}")
-                self.data = []
-        else:
-            try:
-                self.data = DataLoader.load_json_data("assets/data/hydro_data.json")
-                print(f"Loaded {len(self.data)} years of data")
-            except Exception as e:
-                print(f"Error loading data: {e}")
-                self.data = []
 
         self.main_menu = MainMenu()
         self.water_menu = Water()
@@ -80,33 +61,6 @@ class App:
                     self.polution_menu.handle_events(event)
                 case "TEMPERATURE":
                     self.temperature_menu.handle_events(event)
-
-    def generate_whole_report(self):
-        if not self.data:
-            print("No data available to generate report")
-            return
-        try:
-            timestamp = pygame.time.get_ticks()
-            report_path = f"reports/hydro_report_{timestamp}.pdf"
-
-            full_path = PDFReportGenerator.generate_report(self.data, report_path)
-            print(f"Report generated: {full_path}")
-
-            try:
-                import platform
-                import subprocess
-
-                if platform.system() == "Darwin":
-                    subprocess.call(("open", full_path))
-                elif platform.system() == "Windows":
-                    os.startfile(full_path)
-                else:
-                    subprocess.call(("xdg-open", full_path))
-            except Exception as e:
-                print(f"Could not open PDF automatically: {e}")
-
-        except Exception as e:
-            print(f"Error generating report: {e}")
 
     def update(self) -> None:
         match self.state.state:
