@@ -3,3 +3,4 @@ run.sh
 __pycache__/
 *.py[cod]
 run.bat
+reports/

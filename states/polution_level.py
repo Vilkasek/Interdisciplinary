@@ -21,8 +21,12 @@ class Polution:
         if self.generate_button.is_clicked(ev):
             data = self.data_loader.load_json_data("hydro_data.json")
 
-            if data:
-                self.report_generation.generate_water_level_report(data)
+            if data and self.data_loader.validate_data(data):
+                success = self.report_generation.generate_pollution_report(data)
+                if success:
+                    print("Raport zanieczyszczeń został wygenerowany pomyślnie!")
+                else:
+                    print("Błąd podczas generowania raportu zanieczyszczeń!")
 
     def render(self, w: pygame.surface.Surface):
         self.generate_button.render(w)
