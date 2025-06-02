@@ -13,6 +13,9 @@ class Water:
         self.data_loader = DataLoader()
         self.report_generation = ReportGenerator()
 
+        self.map1s = pygame.image.load("assets/maps/level/map_level_21.png")
+        self.map1r = self.map1s.get_rect(center=(1000, 400))
+
         self.ui = UI()
 
     def handle_events(self, ev: pygame.event.Event):
@@ -29,5 +32,7 @@ class Water:
                     print("Błąd podczas generowania raportu poziomu wody!")
 
     def render(self, w: pygame.surface.Surface):
+        w.blit(self.map1s, self.map1r)
+
         self.generate_button.render(w)
         self.ui.render(w)

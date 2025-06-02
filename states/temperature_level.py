@@ -15,6 +15,9 @@ class Temperature:
         self.data_loader = DataLoader()
         self.report_generation = ReportGenerator()
 
+        self.map1s = pygame.image.load("assets/maps/temperature/map_temp_21.png")
+        self.map1r = self.map1s.get_rect(center=(1000, 400))
+
         self.ui = UI()
 
     def handle_events(self, ev: pygame.event.Event):
@@ -31,5 +34,7 @@ class Temperature:
                     print("Błąd podczas generowania raportu temperatury!")
 
     def render(self, w: pygame.surface.Surface):
+        w.blit(self.map1s, self.map1r)
+
         self.generate_button.render(w)
         self.ui.render(w)
