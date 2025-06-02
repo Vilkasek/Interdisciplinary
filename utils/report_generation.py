@@ -1,15 +1,14 @@
 import os
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict
 
-import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import numpy as np
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 from reportlab.lib.units import inch
-from reportlab.pdfbase import pdfmetrics, pdfutils
+from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (Image, Paragraph, SimpleDocTemplate, Spacer,
                                 Table, TableStyle)
@@ -21,20 +20,17 @@ class ReportGenerator:
         self.assets_dir = assets_dir
         self.font_path = os.path.join(assets_dir, "fonts")
 
-        # Stwórz katalogi jeśli nie istnieją
         os.makedirs(reports_dir, exist_ok=True)
         os.makedirs(self.font_path, exist_ok=True)
 
-        # Zarejestruj czcionki
         self._register_fonts()
 
     def _register_fonts(self):
         """Rejestruje czcionki dla PDF"""
         try:
-            # Sprawdź czy istnieją pliki czcionek w folderze assets/fonts
             font_files = {
-                "DejaVuSans": "DejaVuSans.ttf",
-                "DejaVuSans-Bold": "DejaVuSans-Bold.ttf",
+                "Helvetica": "Helvetica.ttf",
+                "Helvetica-Bold": "Helvetica.ttf",
             }
 
             for font_name, filename in font_files.items():
@@ -53,10 +49,8 @@ class ReportGenerator:
             print("Używam czcionek domyślnych")
 
     def _create_styles(self):
-        """Tworzy style dla dokumentu PDF"""
         styles = getSampleStyleSheet()
 
-        # Sprawdź czy zarejestrowane czcionki są dostępne
         try:
             title_font = (
                 "DejaVuSans-Bold"
@@ -101,7 +95,6 @@ class ReportGenerator:
         return custom_styles
 
     def _analyze_trends(self, data: Dict[str, Any]) -> Dict[str, str]:
-        """Analizuje trendy w danych i generuje prognozy"""
         years = []
         avg_levels = []
         temperatures = []
@@ -113,7 +106,6 @@ class ReportGenerator:
 
         trends = {}
 
-        # Analiza trendu poziomu wody
         if len(avg_levels) >= 2:
             water_trend = np.polyfit(years, avg_levels, 1)[0]
             if water_trend > 1:
@@ -129,7 +121,6 @@ class ReportGenerator:
                     "Poziom wody pozostaje relatywnie stabilny. Prognoza na przyszłość: utrzymanie obecnych poziomów."
                 )
 
-        # Analiza trendu temperatury
         if len(temperatures) >= 2:
             temp_trend = np.polyfit(years, temperatures, 1)[0]
             if temp_trend > 0.2:
@@ -152,7 +143,6 @@ class ReportGenerator:
 
         years = [year_data["year"] for year_data in data["data_pomiarow"]]
 
-        # Inicjalizuj filename na początku
         filename = "chart.png"
 
         if chart_type == "water_level":
@@ -187,10 +177,8 @@ class ReportGenerator:
         ax.grid(True, alpha=0.3)
         ax.set_xticks(years)
 
-        # Dostosuj layout
         plt.tight_layout()
 
-        # Zapisz wykres
         chart_path = os.path.join(self.reports_dir, filename)
         plt.savefig(chart_path, dpi=300, bbox_inches="tight")
         plt.close()
@@ -198,26 +186,20 @@ class ReportGenerator:
         return chart_path
 
     def generate_water_level_report(self, data: Dict[str, Any]) -> bool:
-        """Generuje raport PDF o poziomach wody"""
         try:
-            # Ścieżka do pliku PDF
             pdf_path = os.path.join(self.reports_dir, "raport_poziom_wody.pdf")
 
-            # Stwórz dokument PDF
             doc = SimpleDocTemplate(pdf_path, pagesize=A4)
             story = []
 
-            # Pobierz style
             styles = self._create_styles()
 
-            # Tytuł raportu
             title = Paragraph(
                 f"Raport: {data['nazwa_projektu']}", styles["CustomTitle"]
             )
             story.append(title)
             story.append(Spacer(1, 20))
 
-            # Informacje podstawowe
             info_text = f"""
             <b>Lokalizacja:</b> {data['lokalizacja']}<br/>
             <b>Okres badań:</b> {data['data_pomiarow'][0]['year']} - {data['data_pomiarow'][-1]['year']}<br/>
@@ -227,14 +209,12 @@ class ReportGenerator:
             story.append(info)
             story.append(Spacer(1, 20))
 
-            # Wykres poziomu wody
             chart_path = self._create_chart(data, "water_level")
             if os.path.exists(chart_path):
                 img = Image(chart_path, width=6 * inch, height=3.6 * inch)
                 story.append(img)
                 story.append(Spacer(1, 20))
 
-            # Tabela z danymi
             story.append(
                 Paragraph("Szczegółowe dane pomiarowe", styles["CustomHeading"])
             )
@@ -268,7 +248,6 @@ class ReportGenerator:
             story.append(table)
             story.append(Spacer(1, 20))
 
-            # Analiza trendów i prognoza
             trends = self._analyze_trends(data)
             story.append(
                 Paragraph("Analiza trendów i prognoza", styles["CustomHeading"])
@@ -282,7 +261,6 @@ class ReportGenerator:
                 temp_para = Paragraph(trends["temperature"], styles["CustomBody"])
                 story.append(temp_para)
 
-            # Podsumowanie
             story.append(Spacer(1, 20))
             story.append(Paragraph("Podsumowanie", styles["CustomHeading"]))
 
@@ -295,7 +273,6 @@ class ReportGenerator:
             summary = Paragraph(summary_text, styles["CustomBody"])
             story.append(summary)
 
-            # Zbuduj PDF
             doc.build(story)
 
             print(f"Raport został wygenerowany: {pdf_path}")
@@ -313,21 +290,18 @@ class ReportGenerator:
             story = []
             styles = self._create_styles()
 
-            # Tytuł
             title = Paragraph(
                 f"Raport temperatury: {data['nazwa_projektu']}", styles["CustomTitle"]
             )
             story.append(title)
             story.append(Spacer(1, 20))
 
-            # Wykres temperatury
             chart_path = self._create_chart(data, "temperature")
             if os.path.exists(chart_path):
                 img = Image(chart_path, width=6 * inch, height=3.6 * inch)
                 story.append(img)
                 story.append(Spacer(1, 20))
 
-            # Analiza
             trends = self._analyze_trends(data)
             if "temperature" in trends:
                 analysis = Paragraph(
@@ -344,7 +318,6 @@ class ReportGenerator:
             return False
 
     def generate_pollution_report(self, data: Dict[str, Any]) -> bool:
-        """Generuje raport PDF o zanieczyszczeniach"""
         try:
             pdf_path = os.path.join(self.reports_dir, "raport_zanieczyszczenia.pdf")
             doc = SimpleDocTemplate(pdf_path, pagesize=A4)
@@ -358,7 +331,6 @@ class ReportGenerator:
             story.append(title)
             story.append(Spacer(1, 20))
 
-            # Placeholder dla danych o zanieczyszczeniach
             info = Paragraph(
                 "Dane o zanieczyszczeniach będą dostępne po rozszerzeniu struktury danych.",
                 styles["CustomBody"],

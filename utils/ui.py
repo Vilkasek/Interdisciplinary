@@ -21,6 +21,20 @@ class UI:
         )
         self.water_text_rectangle = self.water_text_surface.get_rect(topleft=(220, 300))
 
+        self.polution_text_surface = self.font.render(
+            "Poziom zanieczyszczeń", True, green_text_color, None
+        )
+        self.polution_text_rectangle = self.polution_text_surface.get_rect(
+            topleft=(220, 498)
+        )
+
+        self.temperature_text_surface = self.font.render(
+            "Poziom temperatury", True, orange_text_color, None
+        )
+        self.temperature_text_rectangle = self.temperature_text_surface.get_rect(
+            topleft=(220, 696)
+        )
+
         self.title_surface = pygame.image.load("assets/graphics/title.png")
         self.title_rectangle = self.title_surface.get_rect(topleft=(300, 20))
 
@@ -42,6 +56,8 @@ class UI:
         w.blit(self.title_surface, self.title_rectangle)
 
         w.blit(self.water_text_surface, self.water_text_rectangle)
+        w.blit(self.polution_text_surface, self.polution_text_rectangle)
+        w.blit(self.temperature_text_surface, self.temperature_text_rectangle)
 
         for button in self.buttons:
             button.render(w)
