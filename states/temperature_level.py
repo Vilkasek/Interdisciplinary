@@ -1,12 +1,10 @@
-from random import randint
-
 import pygame
 
 from utils.button import Button
 from utils.data_loader import DataLoader
 from utils.report_generation import ReportGenerator
 from utils.ui import UI
-
+from utils.states import State
 
 class Temperature:
     def __init__(self) -> None:
@@ -24,8 +22,10 @@ class Temperature:
         self.map1rr = self.map1sr.get_rect(center=(1000, 400))
 
         self.ui = UI()
-
-        self.image = randint(1, 2)
+        
+        self.state = State()
+        
+        self.image = 1
 
     def handle_events(self, ev: pygame.event.Event):
         self.ui.handle_events(ev)
@@ -41,6 +41,8 @@ class Temperature:
                     print("Błąd podczas generowania raportu temperatury!")
 
     def render(self, w: pygame.surface.Surface):
+        self.image = self.state.image
+
         match self.image:
             case 1:
                 w.blit(self.map1sl, self.map1rl)
