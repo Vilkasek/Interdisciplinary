@@ -1,3 +1,5 @@
+from random import randint
+
 import pygame
 
 from utils.button import Button
@@ -15,10 +17,15 @@ class Temperature:
         self.data_loader = DataLoader()
         self.report_generation = ReportGenerator()
 
-        self.map1s = pygame.image.load("assets/maps/temperature/map_temp_21.png")
-        self.map1r = self.map1s.get_rect(center=(1000, 400))
+        self.map1sl = pygame.image.load("assets/maps/temperature/map_temp_21.png")
+        self.map1rl = self.map1sl.get_rect(center=(1000, 400))
+
+        self.map1sr = pygame.image.load("assets/maps/temperature/Temp21.png")
+        self.map1rr = self.map1sr.get_rect(center=(1000, 400))
 
         self.ui = UI()
+
+        self.image = randint(1, 2)
 
     def handle_events(self, ev: pygame.event.Event):
         self.ui.handle_events(ev)
@@ -34,7 +41,11 @@ class Temperature:
                     print("Błąd podczas generowania raportu temperatury!")
 
     def render(self, w: pygame.surface.Surface):
-        w.blit(self.map1s, self.map1r)
+        match self.image:
+            case 1:
+                w.blit(self.map1sl, self.map1rl)
+            case 2:
+                w.blit(self.map1sr, self.map1rr)
 
         self.generate_button.render(w)
         self.ui.render(w)
