@@ -4,7 +4,7 @@ from utils.button import Button
 from utils.data_loader import DataLoader
 from utils.report_generation import ReportGenerator
 from utils.ui import UI
-
+from utils.states import State
 
 class Water:
     def __init__(self) -> None:
@@ -13,9 +13,14 @@ class Water:
         self.data_loader = DataLoader()
         self.report_generation = ReportGenerator()
 
-        self.map1s = pygame.image.load("assets/maps/level/map_level_21.png")
-        self.map1r = self.map1s.get_rect(center=(1000, 400))
+        self.map1sl = pygame.image.load("assets/maps/level/map_level_21.png")
+        self.map1rl = self.map1sl.get_rect(center=(1000, 400))
 
+        self.map1sr = pygame.image.load("assets/maps/temperature/Poz21.png")
+        self.map1rr = self.map1sr.get_rect(center=(1000, 400))
+
+        self.state = State()
+        
         self.ui = UI()
 
     def handle_events(self, ev: pygame.event.Event):
@@ -32,7 +37,13 @@ class Water:
                     print("Błąd podczas generowania raportu poziomu wody!")
 
     def render(self, w: pygame.surface.Surface):
-        w.blit(self.map1s, self.map1r)
+        self.image = self.state.image
+
+        match self.image:
+            case 1:
+                w.blit(self.map1sl, self.map1rl)
+            case 2:
+                w.blit(self.map1sr, self.map1rr)
 
         self.generate_button.render(w)
         self.ui.render(w)
