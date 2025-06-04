@@ -3,8 +3,9 @@ import pygame
 from utils.button import Button
 from utils.data_loader import DataLoader
 from utils.report_generation import ReportGenerator
-from utils.ui import UI
 from utils.states import State
+from utils.ui import UI
+
 
 class Water:
     def __init__(self) -> None:
@@ -16,11 +17,11 @@ class Water:
         self.map1sl = pygame.image.load("assets/maps/level/map_level_21.png")
         self.map1rl = self.map1sl.get_rect(center=(1000, 400))
 
-        self.map1sr = pygame.image.load("assets/maps/temperature/Poz21.png")
+        self.map1sr = pygame.image.load("assets/maps/level/Poz21.png")
         self.map1rr = self.map1sr.get_rect(center=(1000, 400))
 
         self.state = State()
-        
+
         self.ui = UI()
 
     def handle_events(self, ev: pygame.event.Event):
